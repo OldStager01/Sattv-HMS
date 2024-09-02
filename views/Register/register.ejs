@@ -1,0 +1,116 @@
+<form action="/users/register" method="post" enctype="multipart/form-data">
+  <div class="flex gap-5 flex-col mb-7 md:flex-row">
+    <div class="flex-1">
+      <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+        First Name
+      </label>
+      <input
+        required
+        type="text"
+        placeholder="First Name"
+        name="firstName"
+        class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+      />
+    </div>
+    <div class="flex-1">
+      <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+        Last Name
+      </label>
+      <input
+        required
+        type="text"
+        placeholder="Last Name"
+        name="lastName"
+        class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+      />
+    </div>
+  </div>
+  <div class="flex gap-5 flex-col mb-7 md:flex-row">
+    <div class="flex-1">
+      <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+        Phone No.
+      </label>
+      <input
+        required
+        type="tel"
+        placeholder="Phone No."
+        name="contact"
+        class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+      />
+    </div>
+    <div class="flex-1">
+      <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+        Email
+      </label>
+      <input
+        required
+        type="email"
+        placeholder="Email"
+        name="email"
+        class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+      />
+    </div>
+  </div>
+  <div class="flex gap-5 flex-col mb-7 md:flex-row">
+    <div class="flex-1">
+      <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+        Date of Birth
+      </label>
+      <input
+        required
+        type="date"
+        name="dob"
+        placeholder="Date of Birth"
+        class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+      />
+    </div>
+    <div class="flex-1">
+      <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+        Gender
+      </label>
+      <div
+        x-data="{ isOptionSelected: false }"
+        class="relative z-20 dark:bg-form-input"
+      >
+        <select
+          required
+          name="gender"
+          class="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
+          :class="isOptionSelected && 'text-black dark:text-white'"
+          @change="isOptionSelected = true"
+        >
+          <option value="male" class="text-body">Male</option>
+          <option value="female" class="text-body">Female</option>
+          <option value="other" class="text-body">Other</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="mb-7">
+    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+      Attach file
+    </label>
+    <input
+      type="file"
+      name="files"
+      multiple
+      accept=".jpg, .jpeg, .png, .txt, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx"
+      class="w-full md:w-1/2 cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent font-normal outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:px-5 file:py-3 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
+    />
+  </div>
+  <div class="flex flex-col gap-7 md:flex-row md:gap-10">
+    <button
+      type="submit"
+      class="inline-flex items-center justify-center rounded-full bg-green-500 px-5 py-4 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+    >
+      Register
+    </button>
+    <button
+      type="reset"
+      class="inline-flex items-center justify-center rounded-full bg-red-600 px-5 py-4 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+    >
+      Reset
+    </button>
+  </div>
+</form>
+<script src="/js/participants/registerFormValidation.js"></script>

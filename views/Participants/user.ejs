@@ -1,0 +1,526 @@
+<div class="flex items-start justify-between gap-10 flex-col md:flex-row">
+  <!-- User Data start -->
+  <div class="flex-[0.35] w-1/3">
+    <!-- Personal Data starts -->
+    <div
+      class="rounded-sm border mb-5 border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-7.5"
+    >
+      <% const user = userData.user %>
+      <form disabled action="/users/<%= id %>/edit" method="post" id="userForm">
+        <div class="flex gap-5 flex-col mb-6 md:flex-row">
+          <div class="flex-1">
+            <label
+              class="mb-3 block text-sm font-medium text-black dark:text-white"
+            >
+              First Name
+            </label>
+            <input
+              disabled
+              required
+              value="<%= user.firstName %>"
+              type="text"
+              name="firstName"
+              class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+            />
+          </div>
+          <div class="flex-1">
+            <label
+              class="mb-3 block text-sm font-medium text-black dark:text-white"
+            >
+              Last Name
+            </label>
+            <input
+              disabled
+              required
+              type="text"
+              value="<%= user.lastName %>"
+              placeholder="Last Name"
+              name="lastName"
+              class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+            />
+          </div>
+        </div>
+        <div class="mb-6">
+          <label
+            class="mb-3 block text-sm font-medium text-black dark:text-white"
+          >
+            Phone No.
+          </label>
+          <input
+            disabled
+            required
+            type="tel"
+            value="<%= user.contact %>"
+            placeholder="Phone No."
+            name="contact"
+            class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+          />
+        </div>
+        <div class="mb-6">
+          <label
+            class="mb-3 block text-sm font-medium text-black dark:text-white"
+          >
+            Email
+          </label>
+          <input
+            disabled
+            required
+            type="email"
+            value="<%= user.email %>"
+            placeholder="Email"
+            name="email"
+            class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+          />
+        </div>
+        <div class="flex gap-5 flex-col mb-7 md:flex-row">
+          <div class="flex-1">
+            <label
+              class="mb-3 block text-sm font-medium text-black dark:text-white"
+            >
+              Age
+            </label>
+            <input
+              disabled
+              required
+              id="age"
+              type="number"
+              name="age"
+              placeholder="Age"
+              class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+            />
+          </div>
+          <div class="flex-1">
+            <label
+              class="mb-3 block text-sm font-medium text-black dark:text-white"
+            >
+              Gender
+            </label>
+            <div
+              x-data="{ isOptionSelected: false }"
+              class="relative z-20 dark:bg-form-input"
+            >
+              <select
+                disabled
+                required
+                name="gender"
+                class="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
+                :class="isOptionSelected && 'text-black
+                dark:text-white'"
+                @change="isOptionSelected = true"
+              >
+                <option value="male" class="text-body">Male</option>
+                <option value="female" class="text-body">Female</option>
+                <option value="other" class="text-body">Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-7 md:flex-row md:gap-10">
+          <button
+            type="button"
+            id="editButton"
+            class="inline-flex items-center justify-center rounded-md bg-green-500 px-3 py-3 text-center font-medium text-white hover:bg-opacity-90 lg:px-6"
+          >
+            Edit
+          </button>
+          <button
+            type="submit"
+            id="submitButton"
+            class="hidden items-center justify-center rounded-md bg-green-500 px-3 py-3 text-center font-medium text-white hover:bg-opacity-90 lg:px-6"
+          >
+            Submit
+          </button>
+          <button
+            type="button"
+            id="cancelButton"
+            class="hidden items-center justify-center rounded-md bg-red-600 px-3 py-3 text-center font-medium text-white hover:bg-opacity-90 lg:px-6"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+    <!-- Personal Data ends -->
+    <!-- Next Appointment Date start -->
+    <div
+      class="rounded-sm border mb-5 border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-7.5"
+    >
+      <h3 class="text-black dark:text-white font-semibold mb-3">
+        Next Appointment Date:
+        <span id="nextAppointmentDate"></span>
+      </h3>
+      <form
+        action="/users/<%= id %>/appointment/edit"
+        hidden
+        required
+        id="editNextAppointmentForm"
+        class="mb-3"
+        method="post"
+      >
+        <label for="editNextAppointment">Choose Date: </label>
+        <input
+          type="datetime-local"
+          id="editNextAppointment"
+          name="nextAppointmentDate"
+          class="w-full my-4 rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+        />
+        <div class="flex flex-col gap-7 md:flex-row md:gap-10 mb-3">
+          <button
+            type="submit"
+            id="submitDateButton"
+            class="hidden items-center justify-center rounded-md bg-green-500 px-3 py-3 text-center font-medium text-white hover:bg-opacity-90 lg:px-6"
+          >
+            Submit
+          </button>
+          <button
+            type="button"
+            id="cancelDateButton"
+            class="hidden items-center justify-center rounded-md bg-red-600 px-3 py-3 text-center font-medium text-white hover:bg-opacity-90 lg:px-6"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+      <button
+        type="button"
+        id="editDateButton"
+        class="inline-flex items-center justify-center rounded-md bg-green-500 px-3 py-3 text-center font-medium text-white hover:bg-opacity-90 lg:px-6"
+      >
+        Edit
+      </button>
+    </div>
+
+    <!-- Next Appointment Date end -->
+
+    <!-- Attachments starts -->
+    <div
+      x-data="{ accordionOpen: false }"
+      @click.outside="accordionOpen = false"
+      class="rounded-md border border-stroke px-4 py-3 bg-white shadow-default dark:border-strokedark dark:bg-boxdark md:px-6 xl:px-7.5"
+    >
+      <button
+        @click="accordionOpen = !accordionOpen"
+        class="flex w-full items-center justify-between gap-2"
+      >
+        <div>
+          <h4 class="text-left text-md font-bold text-black dark:text-white">
+            Attachments
+          </h4>
+        </div>
+
+        <div
+          class="flex h-9 w-full max-w-9 items-center justify-center rounded-full border border-primary dark:border-white"
+        >
+          <svg
+            :class="accordionOpen && 'hidden'"
+            class="fill-primary dark:fill-white"
+            width="15"
+            height="15"
+            viewBox="0 0 15 15"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M13.2969 6.51563H8.48438V1.70312C8.48438 1.15625 8.04688 0.773438 7.5 0.773438C6.95313 0.773438 6.57031 1.21094 6.57031 1.75781V6.57031H1.75781C1.21094 6.57031 0.828125 7.00781 0.828125 7.55469C0.828125 8.10156 1.26563 8.48438 1.8125 8.48438H6.625V13.2969C6.625 13.8438 7.0625 14.2266 7.60938 14.2266C8.15625 14.2266 8.53906 13.7891 8.53906 13.2422V8.42969H13.3516C13.8984 8.42969 14.2813 7.99219 14.2813 7.44531C14.2266 6.95312 13.7891 6.51563 13.2969 6.51563Z"
+              fill=""
+            />
+          </svg>
+
+          <svg
+            :class="accordionOpen === true ? 'block' : 'hidden'"
+            class="fill-primary dark:fill-white"
+            width="15"
+            height="3"
+            viewBox="0 0 15 3"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M13.503 0.447144C13.446 0.447144 13.503 0.447144 13.503 0.447144H1.49482C0.925718 0.447144 0.527344 0.902427 0.527344 1.47153C0.527344 2.04064 0.982629 2.43901 1.55173 2.43901H13.5599C14.129 2.43901 14.5273 1.98373 14.5273 1.41462C14.4704 0.902427 14.0151 0.447144 13.503 0.447144Z"
+              fill=""
+            />
+          </svg>
+        </div>
+      </button>
+
+      <div x-show="accordionOpen" class="mt-5 duration-200 ease-in-out">
+        <ul class="text-black dark:text-white p-2">
+          <% userData.files.forEach(file => { %>
+          <li id="<%= file.id %>" class="my-2">
+            <div class="flex justify-between align-middle">
+              <p class="text-nowrap truncate w-1/2"><%= file.name %></p>
+
+              <div>
+                <%= parseFloat((file.size/(1024*1024)).toFixed(2)) %> MB
+              </div>
+              <div class="flex justify-evenly items-end gap-10">
+                <% if(file.webViewLink){ %>
+                <a href="<%= file.webViewLink %>" target="_blank">
+                  <svg
+                    width="25"
+                    height="23"
+                    viewBox="0 0 1024 1024"
+                    class="icon"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M511.9 924.8C91.8 924.8 2.6 524.1 1.7 520.1L0 512l1.7-8.1c0.8-4 90-404.7 510.2-404.7s509.4 400.7 510.2 404.7l1.9 9.1-2.4 9c-0.9 4-110.5 402.8-509.7 402.8zM80.6 511.9c13.7 52.8 102.2 334.2 431.4 334.2 310.8 0 413.7-279.5 431.1-335.1-14.6-55.5-104.2-333.2-431.1-333.2-330.4 0-417.8 281-431.4 334.1z"
+                      fill="#87CEEB"
+                    />
+                    <path
+                      d="M511.9 708.6c-108.4 0-196.6-88.2-196.6-196.6s88.2-196.6 196.6-196.6c21.7 0 39.3 17.6 39.3 39.3 0 21.7-17.6 39.3-39.3 39.3-65 0-117.9 52.9-117.9 117.9s52.9 117.9 117.9 117.9 118-52.8 118-117.8c0-24.8-7.6-48.5-21.9-68.5-12.7-17.7-8.6-42.2 9.1-54.9 17.7-12.7 42.2-8.6 54.8 9.1 24 33.5 36.6 73 36.6 114.3 0 108.4-88.2 196.6-196.6 196.6z"
+                      fill="#5F6379"
+                    />
+                  </svg>
+                </a>
+                <% } %>
+                <a href="<%= file.webContentLink %>" target="_blank">
+                  <svg
+                    width="25"
+                    height="23"
+                    viewBox="0 0 1024 1024"
+                    class="icon"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M512 791.466667L277.333333 512h469.333334zM426.666667 85.333333h170.666666v85.333334h-170.666666zM426.666667 213.333333h170.666666v85.333334h-170.666666z"
+                      fill="#87CEEB"
+                    />
+                    <path
+                      d="M426.666667 341.333333h170.666666v234.666667h-170.666666zM128 853.333333h768v85.333334H128z"
+                      fill="#87CEEB"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+    </div>
+    <!-- Attachments starts -->
+  </div>
+  <!-- User Data End -->
+
+  <!-- Appointment Data Start -->
+  <div class="flex-[0.65]">
+    <div
+      class="rounded-sm w-full flex-1 border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+    >
+      <div
+        class="flex justify-between border-b border-stroke px-4 py-4 dark:border-strokedark sm:px-6 xl:px-9"
+      >
+        <h3 class="font-medium text-lg text-black dark:text-white">
+          Appointments:
+          <span class="font-bold"><%= (userData.appointments.length-1) %></span>
+        </h3>
+        <a href="/users/<%= id %>/appointment">
+          <button
+            type="button"
+            id="startAppointment"
+            class="inline-flex items-center justify-center rounded-md bg-green-500 px-3 py-3 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+          >
+            Start Appointment
+          </button>
+        </a>
+      </div>
+
+      <div class="p-4 sm:p-6 xl:p-9">
+        <div class="flex flex-col gap-7.5">
+          <% for(let i=userData.appointments.length-1; i>=1;i--) { %> <% const
+          appointment = userData.appointments[i]; %>
+          <!-- Accordion Item Start-->
+          <div
+            id="<%= appointment?.appointmentId %>"
+            x-data="{ accordionOpen: false }"
+            @click.outside="accordionOpen = false"
+            class="rounded-md border border-stroke px-4 py-3 shadow-9 dark:border-strokedark dark:shadow-none md:px-6 xl:px-7.5"
+          >
+            <button
+              @click="accordionOpen = !accordionOpen"
+              class="flex w-full items-center justify-between gap-2"
+            >
+              <div>
+                <h4
+                  class="text-left text-md font-bold text-black dark:text-white"
+                >
+                  Date: <%= appointment?.appointmentDate %>
+                </h4>
+              </div>
+
+              <div
+                class="flex h-9 w-full max-w-9 items-center justify-center rounded-full border border-primary dark:border-white"
+              >
+                <svg
+                  :class="accordionOpen && 'hidden'"
+                  class="fill-primary dark:fill-white"
+                  width="15"
+                  height="15"
+                  viewBox="0 0 15 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M13.2969 6.51563H8.48438V1.70312C8.48438 1.15625 8.04688 0.773438 7.5 0.773438C6.95313 0.773438 6.57031 1.21094 6.57031 1.75781V6.57031H1.75781C1.21094 6.57031 0.828125 7.00781 0.828125 7.55469C0.828125 8.10156 1.26563 8.48438 1.8125 8.48438H6.625V13.2969C6.625 13.8438 7.0625 14.2266 7.60938 14.2266C8.15625 14.2266 8.53906 13.7891 8.53906 13.2422V8.42969H13.3516C13.8984 8.42969 14.2813 7.99219 14.2813 7.44531C14.2266 6.95312 13.7891 6.51563 13.2969 6.51563Z"
+                    fill=""
+                  />
+                </svg>
+
+                <svg
+                  :class="accordionOpen === true ? 'block' : 'hidden'"
+                  class="fill-primary dark:fill-white"
+                  width="15"
+                  height="3"
+                  viewBox="0 0 15 3"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M13.503 0.447144C13.446 0.447144 13.503 0.447144 13.503 0.447144H1.49482C0.925718 0.447144 0.527344 0.902427 0.527344 1.47153C0.527344 2.04064 0.982629 2.43901 1.55173 2.43901H13.5599C14.129 2.43901 14.5273 1.98373 14.5273 1.41462C14.4704 0.902427 14.0151 0.447144 13.503 0.447144Z"
+                    fill=""
+                  />
+                </svg>
+              </div>
+            </button>
+
+            <div x-show="accordionOpen" class="mt-5 duration-200 ease-in-out">
+              <ul class="text-white p-2">
+                <div class="flex flex-col md:flex-row">
+                  <li class="flex-1 my-2">
+                    <span class="font-semibold">Weight: </span>
+                    <span class="max-w-[830px] font-medium"
+                      ><%= appointment?.weight %></span
+                    >
+                  </li>
+                </div>
+                <li class="my-2">
+                  <span class="font-semibold">Blood Pressure: </span>
+                  <span class="max-w-[830px] font-medium"
+                    ><%= appointment?.bloodPressure %></span
+                  >
+                </li>
+                <li class="my-2">
+                  <span class="font-semibold">Guidelines: </span>
+                  <p class="max-w-[830px] font-medium pl-2">
+                    <%= appointment?.guidelines %>
+                  </p>
+                </li>
+                <li class="my-2">
+                  <span class="font-semibold">Notes: </span>
+                  <p class="max-w-[830px] font-medium pl-2">
+                    <%= appointment?.notes %>
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- Accordion Item End -->
+          <% } %> <% const appointment = userData.appointments[0]; %>
+          <!-- Accordion Item Start-->
+          <div
+            id="<%= appointment?.appointmentId %>"
+            x-data="{ accordionOpen: false }"
+            @click.outside="accordionOpen = false"
+            class="rounded-md border border-stroke px-4 py-3 shadow-9 dark:border-strokedark dark:shadow-none md:px-6 xl:px-7.5"
+          >
+            <button
+              @click="accordionOpen = !accordionOpen"
+              class="flex w-full items-center justify-between gap-2"
+            >
+              <div>
+                <h4
+                  class="text-left text-md font-bold text-black dark:text-white"
+                >
+                  (Initial) Date: <%= appointment?.appointmentDate %>
+                </h4>
+              </div>
+
+              <div
+                class="flex h-9 w-full max-w-9 items-center justify-center rounded-full border border-primary dark:border-white"
+              >
+                <svg
+                  :class="accordionOpen && 'hidden'"
+                  class="fill-primary dark:fill-white"
+                  width="15"
+                  height="15"
+                  viewBox="0 0 15 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M13.2969 6.51563H8.48438V1.70312C8.48438 1.15625 8.04688 0.773438 7.5 0.773438C6.95313 0.773438 6.57031 1.21094 6.57031 1.75781V6.57031H1.75781C1.21094 6.57031 0.828125 7.00781 0.828125 7.55469C0.828125 8.10156 1.26563 8.48438 1.8125 8.48438H6.625V13.2969C6.625 13.8438 7.0625 14.2266 7.60938 14.2266C8.15625 14.2266 8.53906 13.7891 8.53906 13.2422V8.42969H13.3516C13.8984 8.42969 14.2813 7.99219 14.2813 7.44531C14.2266 6.95312 13.7891 6.51563 13.2969 6.51563Z"
+                    fill=""
+                  />
+                </svg>
+
+                <svg
+                  :class="accordionOpen === true ? 'block' : 'hidden'"
+                  class="fill-primary dark:fill-white"
+                  width="15"
+                  height="3"
+                  viewBox="0 0 15 3"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M13.503 0.447144C13.446 0.447144 13.503 0.447144 13.503 0.447144H1.49482C0.925718 0.447144 0.527344 0.902427 0.527344 1.47153C0.527344 2.04064 0.982629 2.43901 1.55173 2.43901H13.5599C14.129 2.43901 14.5273 1.98373 14.5273 1.41462C14.4704 0.902427 14.0151 0.447144 13.503 0.447144Z"
+                    fill=""
+                  />
+                </svg>
+              </div>
+            </button>
+
+            <div x-show="accordionOpen" class="mt-5 duration-200 ease-in-out">
+              <ul class="text-white p-2">
+                <div class="flex flex-col md:flex-row">
+                  <li class="flex-1 my-2">
+                    <span class="font-semibold">Weight: </span>
+                    <span class="max-w-[830px] font-medium"
+                      ><%= appointment?.weight %></span
+                    >
+                  </li>
+                  <li class="flex-1 my-2">
+                    <span class="font-semibold">Height: </span>
+                    <span class="max-w-[830px] font-medium"
+                      ><%= appointment?.height %></span
+                    >
+                  </li>
+                </div>
+                <li class="my-2">
+                  <span class="font-semibold">Blood Pressure: </span>
+                  <span class="max-w-[830px] font-medium"
+                    ><%= appointment?.bloodPressure %></span
+                  >
+                </li>
+                <li class="my-2">
+                  <span class="font-semibold">Guidelines: </span>
+                  <p class="max-w-[830px] font-medium pl-2">
+                    <%= appointment?.guidelines %>
+                  </p>
+                </li>
+                <li class="my-2">
+                  <span class="font-semibold">Notes: </span>
+                  <p class="max-w-[830px] font-medium pl-2">
+                    <%= appointment?.notes %>
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Appointment Data End -->
+</div>
+
+<script>
+  const id = `<%= JSON.stringify(id) %>`;
+  const today = `<%= JSON.stringify(today) %>`;
+  const userData = `<%= JSON.stringify(userData.user) %>`;
+  const nextAppointmentDate = `<%= JSON.stringify(nextAppointmentDate) %>`;
+</script>
+<script defer type="module" src="/js/participants/userScript.js"></script>

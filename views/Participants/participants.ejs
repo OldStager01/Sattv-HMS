@@ -1,0 +1,287 @@
+<!-- component -->
+<style>
+  .task-row {
+    transition: opacity 0.3s ease;
+  }
+
+  .task-row.hidden {
+    display: none;
+  }
+
+  .filter-button,
+  .filter-payment {
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .filter-button.active,
+  .filter-payment.active {
+    background-color: #16a6ffa9; /* Active background color */
+    color: white; /* Active text color */
+  }
+
+  th {
+    position: relative;
+  }
+
+  th::after {
+    content: "";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    display: none;
+  }
+
+  th.sort-asc::after {
+    display: block;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  th.sort-desc::after {
+    display: block;
+    transform: translateY(-50%) rotate(-135deg);
+  }
+</style>
+<div class="bg-white dark:bg-boxdark py-4 md:py-7 px-4 md:px-6 xl:px-6">
+  <div
+    class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+  >
+    <div class="data-table-common data-table-one max-w-full overflow-x-auto">
+      <table class="table w-full table-auto" id="dataTableOne">
+        <thead>
+          <tr>
+            <th>
+              <div class="flex items-center gap-1.5">
+                <p>ID</p>
+                <div class="inline-flex flex-col space-y-[2px]">
+                  <span class="inline-block">
+                    <svg
+                      class="fill-current"
+                      width="10"
+                      height="5"
+                      viewBox="0 0 10 5"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M5 0L0 5H10L5 0Z" fill="" />
+                    </svg>
+                  </span>
+                  <span class="inline-block">
+                    <svg
+                      class="fill-current"
+                      width="10"
+                      height="5"
+                      viewBox="0 0 10 5"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
+                        fill=""
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </th>
+            <th>
+              <div class="flex items-center gap-1.5">
+                <p>Name</p>
+                <div class="inline-flex flex-col space-y-[2px]">
+                  <span class="inline-block">
+                    <svg
+                      class="fill-current"
+                      width="10"
+                      height="5"
+                      viewBox="0 0 10 5"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M5 0L0 5H10L5 0Z" fill="" />
+                    </svg>
+                  </span>
+                  <span class="inline-block">
+                    <svg
+                      class="fill-current"
+                      width="10"
+                      height="5"
+                      viewBox="0 0 10 5"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
+                        fill=""
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </th>
+            <th data-type="date" data-format="YYYY/DD/MM">
+              <div class="flex items-center gap-1.5">
+                <p>Status</p>
+                <div class="inline-flex flex-col space-y-[2px]">
+                  <span class="inline-block">
+                    <svg
+                      class="fill-current"
+                      width="10"
+                      height="5"
+                      viewBox="0 0 10 5"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M5 0L0 5H10L5 0Z" fill="" />
+                    </svg>
+                  </span>
+                  <span class="inline-block">
+                    <svg
+                      class="fill-current"
+                      width="10"
+                      height="5"
+                      viewBox="0 0 10 5"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
+                        fill=""
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </th>
+            <th>
+              <div class="flex items-center gap-1.5">
+                <p>Payment</p>
+                <div class="inline-flex flex-col space-y-[2px]">
+                  <span class="inline-block">
+                    <svg
+                      class="fill-current"
+                      width="10"
+                      height="5"
+                      viewBox="0 0 10 5"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M5 0L0 5H10L5 0Z" fill="" />
+                    </svg>
+                  </span>
+                  <span class="inline-block">
+                    <svg
+                      class="fill-current"
+                      width="10"
+                      height="5"
+                      viewBox="0 0 10 5"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
+                        fill=""
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </th>
+            <th>
+              <div class="flex items-center gap-1.5">
+                <p>Next Appointment</p>
+                <div class="inline-flex flex-col space-y-[2px]">
+                  <span class="inline-block">
+                    <svg
+                      class="fill-current"
+                      width="10"
+                      height="5"
+                      viewBox="0 0 10 5"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M5 0L0 5H10L5 0Z" fill="" />
+                    </svg>
+                  </span>
+                  <span class="inline-block">
+                    <svg
+                      class="fill-current"
+                      width="10"
+                      height="5"
+                      viewBox="0 0 10 5"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
+                        fill=""
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </th>
+            <th>
+              <div class="flex items-center gap-1.5">
+                <p>Previous Appointment</p>
+                <div class="inline-flex flex-col space-y-[2px]">
+                  <span class="inline-block">
+                    <svg
+                      class="fill-current"
+                      width="10"
+                      height="5"
+                      viewBox="0 0 10 5"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M5 0L0 5H10L5 0Z" fill="" />
+                    </svg>
+                  </span>
+                  <span class="inline-block">
+                    <svg
+                      class="fill-current"
+                      width="10"
+                      height="5"
+                      viewBox="0 0 10 5"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
+                        fill=""
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <% users?.forEach((user) => { %>
+          <tr>
+            <td>
+              <a href="/users/<%= user.id %>"> <%= user.id %> </a>
+            </td>
+            <td><%= `${user.firstName} ${user.lastName}` %></td>
+            <td><%= user.status %></td>
+            <td><%= user.paymentStatus %></td>
+            <td class="nextAppointmentDate"><%= user.nextAppointmentDate %></td>
+            <td class="lastAppointmentDate"><%= user.lastAppointmentDate %></td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  const userData = `<%= users && JSON.stringify(users).replace(/&quot;/g, '"') %>`;
+</script>
+<script type="module" src="/js/participants/participants.js"></script>

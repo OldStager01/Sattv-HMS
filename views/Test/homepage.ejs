@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SATTV | Homepage</title>
+</head>
+<body>
+    <h1 style="color: <%= authStatus ? "green" : "red" %>">
+        Authentication Status: <%= authStatus %>
+    </h1>
+    <h2>
+        Date: <%= date %>
+    </h2>
+    <h1>Auth</h1>
+    <button><a href="/auth/google">Sign in Using Google</a></button>
+    <button><a href="/auth/logout">SignOut</a></button>
+    <br>
+    <!--!DRIVE  -->
+    <h1>Drive</h1>
+    <ul>
+        <li> 
+            <form action="/drive/list">
+                <label for="listFolderId">List Folder Id: </label>
+                <input type="text" name="listFolderId">
+                <button type="submit">List Drive Files</button>
+                <br>
+            </form>
+        </li>
+            <br>
+        <!--! Change the Action -->
+        <li> 
+            <form action="/drive/createFolder" method="post">
+                <label for="folderName">Folder Name</label>
+                <input type="text" name="folderName" id="folderName">
+                <label for="folderParentId">Folder Parent ID</label>
+                <input type="text" name="folderParentId" id="folderName">
+                <button type="submit">Create Folder</button>
+            </form>
+        </li>
+            <br>
+        <li>
+            <form action="/drive/uploadFiles" method="post" enctype="multipart/form-data">
+                <label for="uploadFolderId">Upload Folder Id: </label>
+                <input type="text" name="uploadFolderId">
+                <br>
+                <label for="uploadFiles">Upload Files: </label>
+                <input type="file" name="files" multiple accept=".jpg, .jpeg, .png, .txt, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx">
+                <button type="submit">Upload</button>
+            </form>
+        </li>
+            <br>
+        <li>
+            <form action="/drive/trash" method="post">
+                <label for="trashFileId">Trash File Id: </label>
+                <input type="text" name="trashFileId">
+                <button type="submit">Trash</button>
+            </form>
+        </li>
+        <li>
+            <form action="/drive/move" method="post">
+                <label for="moveFileId">Move File Id: </label>
+                <input type="text" name="moveFileId">
+                <label for="moveFolderId">Move Folder Id: </label>
+                <input type="text" name="moveFolderId">
+                <button type="submit">Move</button>
+            </form>
+        </li>
+    </ul>
+
+    <!--!SHEETS  -->
+    <h1>Sheets</h1>
+    <ul>
+        <li>
+            <form action="/sheets/create" method="post">
+                <label for="docTitle">Sheet Name: </label>
+                <input type="text" name="docTitle">
+                <button type="submit">Create Sheet</button>
+            </form>
+        </li>
+            <br>
+        <li>
+            <form action="/sheets/readSheet" method="get">
+                <label for="docId">Spreadsheet Id: </label>
+                <input type="text" name="docId">
+                <label for="sheetTitle">Worksheet Title: </label>
+                <input type="text" name="sheetTitle">
+                <button type="submit">Read Sheet</button>
+            </form>
+        </li>
+            <br>
+        <li>
+            <form action="/sheets/updateSheet" method="post">
+                <label for="sheetId">Sheet Id: </label>
+                <input type="text" name="sheetId">
+                <label for="sheetRange">Sheet Range: </label>
+                <input type="text" name="sheetRange">
+                <label for="sheetValue">Sheet Value: </label>
+                <input type="text" name="sheetValue">
+                <button type="submit">Update Sheet</button>
+            </form>
+        </li>
+            <br>
+        <li>
+            <form action="/sheets/deleteSheet" method="post">
+                <label for="sheetId">Sheet Id: </label>
+                <input type="text" name="sheetId">
+                <button type="submit">Delete Sheet</button>
+            </form>
+        </li>
+        <br>
+        <h1>Participant</h1>
+        <ul>
+            <li>
+                <a href="/user/register">User Register Form</a>
+            </li>
+            <li>
+                <a href="/user">List Users</a>
+            </li>
+        </ul>
+</body>
+</html>

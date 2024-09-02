@@ -1,0 +1,352 @@
+<div class="flex items-start justify-between gap-10 flex-col md:flex-row">
+  <!-- User Data start -->
+  <div
+    class="rounded-sm border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-7.5"
+  >
+    <div class="flex-[0.3]">
+      <form disabled action="/users/ /edit" method="post" id="userForm">
+        <div class="flex gap-5 flex-col mb-6 md:flex-row">
+          <div class="flex-1">
+            <label
+              class="mb-3 block text-sm font-medium text-black dark:text-white"
+            >
+              First Name
+            </label>
+            <input
+              disabled
+              required
+              type="text"
+              name="firstName"
+              class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+            />
+          </div>
+          <div class="flex-1">
+            <label
+              class="mb-3 block text-sm font-medium text-black dark:text-white"
+            >
+              Last Name
+            </label>
+            <input disabled required type="text placeholder="Last Name"
+            name="lastName" class="w-full rounded-lg border-[1.5px]
+            border-stroke bg-transparent px-5 py-3 font-normal text-black
+            outline-none transition focus:border-primary active:border-primary
+            disabled:cursor-default disabled:bg-whiter
+            dark:border-form-strokedark dark:bg-form-input dark:text-white
+            dark:focus:border-primary" />
+          </div>
+        </div>
+        <div class="mb-6">
+          <label
+            class="mb-3 block text-sm font-medium text-black dark:text-white"
+          >
+            Phone No.
+          </label>
+          <input
+            disabled
+            required
+            type="tel"
+            placeholder="Phone No."
+            name="contact"
+            class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+          />
+        </div>
+        <div class="mb-6">
+          <label
+            class="mb-3 block text-sm font-medium text-black dark:text-white"
+          >
+            Email
+          </label>
+          <input
+            disabled
+            required
+            type="email"
+            placeholder="Email"
+            name="email"
+            class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+          />
+        </div>
+        <div class="flex gap-5 flex-col mb-7 md:flex-row">
+          <div class="flex-1">
+            <label
+              class="mb-3 block text-sm font-medium text-black dark:text-white"
+            >
+              Age
+            </label>
+            <input
+              disabled
+              required
+              type="number"
+              name="age"
+              placeholder="Age"
+              min="0"
+              max="100"
+              class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+            />
+          </div>
+          <div class="flex-1">
+            <label
+              class="mb-3 block text-sm font-medium text-black dark:text-white"
+            >
+              Gender
+            </label>
+            <div
+              x-data="{ isOptionSelected: false }"
+              class="relative z-20 dark:bg-form-input"
+            >
+              <select
+                disabled
+                required
+                name="gender"
+                class="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
+                :class="isOptionSelected && 'text-black
+                  dark:text-white'"
+                @change="isOptionSelected = true"
+              >
+                <option value="male" class="text-body">Male</option>
+                <option value="female" class="text-body">Female</option>
+                <option value="other" class="text-body">Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-7 md:flex-row md:gap-10">
+          <button
+            type="button"
+            id="editButton"
+            class="inline-flex items-center justify-center rounded-full bg-green-500 px-3 py-3 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+          >
+            Edit
+          </button>
+          <button
+            type="submit"
+            id="submitButton"
+            class="hidden items-center justify-center rounded-full bg-green-500 px-3 py-3 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+          >
+            Submit
+          </button>
+          <button
+            type="button"
+            id="cancelButton"
+            class="hidden items-center justify-center rounded-full bg-red-600 px-3 py-3 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- User Data End -->
+  <div class="flex-1">
+    <!-- Appointment Data Start -->
+    <div
+      class="rounded-sm w-full flex-1 border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+    >
+      <div
+        class="border-b border-stroke px-4 py-4 dark:border-strokedark sm:px-6 xl:px-9"
+      >
+        <h3 class="font-medium text-lg text-black dark:text-white">
+          Appointments:
+          <span class="font-bold"><%= (userData.appointments.length-1) %></span>
+        </h3>
+      </div>
+
+      <div class="p-4 sm:p-6 xl:p-9">
+        <div class="flex flex-col gap-7.5">
+          <% for(let i=userData.appointments.length-1; i>=1;i--) { const
+          appointment = userData.appointments[i]; %>
+          <!-- Accordion Item Start-->
+          <div
+            id="<%= appointment?.appointmentId %>"
+            x-data="{ accordionOpen: false }"
+            @click.outside="accordionOpen = false"
+            class="rounded-md border border-stroke px-4 py-3 shadow-9 dark:border-strokedark dark:shadow-none md:px-6 xl:px-7.5"
+          >
+            <button
+              @click="accordionOpen = !accordionOpen"
+              class="flex w-full items-center justify-between gap-2"
+            >
+              <div>
+                <h4
+                  class="text-left text-md font-bold text-black dark:text-white"
+                >
+                  Date: <%= appointment?.appointmentDate %>
+                </h4>
+              </div>
+
+              <div
+                class="flex h-9 w-full max-w-9 items-center justify-center rounded-full border border-primary dark:border-white"
+              >
+                <svg
+                  :class="accordionOpen && 'hidden'"
+                  class="fill-primary dark:fill-white"
+                  width="15"
+                  height="15"
+                  viewBox="0 0 15 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M13.2969 6.51563H8.48438V1.70312C8.48438 1.15625 8.04688 0.773438 7.5 0.773438C6.95313 0.773438 6.57031 1.21094 6.57031 1.75781V6.57031H1.75781C1.21094 6.57031 0.828125 7.00781 0.828125 7.55469C0.828125 8.10156 1.26563 8.48438 1.8125 8.48438H6.625V13.2969C6.625 13.8438 7.0625 14.2266 7.60938 14.2266C8.15625 14.2266 8.53906 13.7891 8.53906 13.2422V8.42969H13.3516C13.8984 8.42969 14.2813 7.99219 14.2813 7.44531C14.2266 6.95312 13.7891 6.51563 13.2969 6.51563Z"
+                    fill=""
+                  />
+                </svg>
+
+                <svg
+                  :class="accordionOpen === true ? 'block' : 'hidden'"
+                  class="fill-primary dark:fill-white"
+                  width="15"
+                  height="3"
+                  viewBox="0 0 15 3"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M13.503 0.447144C13.446 0.447144 13.503 0.447144 13.503 0.447144H1.49482C0.925718 0.447144 0.527344 0.902427 0.527344 1.47153C0.527344 2.04064 0.982629 2.43901 1.55173 2.43901H13.5599C14.129 2.43901 14.5273 1.98373 14.5273 1.41462C14.4704 0.902427 14.0151 0.447144 13.503 0.447144Z"
+                    fill=""
+                  />
+                </svg>
+              </div>
+            </button>
+
+            <div x-show="accordionOpen" class="mt-5 duration-200 ease-in-out">
+              <ul class="text-white p-2">
+                <div class="flex flex-col md:flex-row">
+                  <li class="flex-1 my-2">
+                    <span class="font-semibold">Weight: </span>
+                    <span class="max-w-[830px] font-medium"
+                      ><%= appointment?.weight %></span
+                    >
+                  </li>
+                  <li class="flex-1 my-2">
+                    <span class="font-semibold">Height: </span>
+                    <span class="max-w-[830px] font-medium"
+                      ><%= appointment?.height %></span
+                    >
+                  </li>
+                </div>
+                <li class="my-2">
+                  <span class="font-semibold">Blood Pressure: </span>
+                  <span class="max-w-[830px] font-medium"
+                    ><%= appointment?.bloodPressure %></span
+                  >
+                </li>
+                <li class="my-2">
+                  <span class="font-semibold">Guidelines: </span>
+                  <p class="max-w-[830px] font-medium pl-2">
+                    <%= appointment?.guidelines %>
+                  </p>
+                </li>
+                <li class="my-2">
+                  <span class="font-semibold">Notes: </span>
+                  <p class="max-w-[830px] font-medium pl-2">
+                    <%= appointment?.notes %>
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- Accordion Item End -->
+          <% } %> <% const appointment = userData.appointments[0]; %>
+          <!-- Accordion Item Start-->
+          <div
+            id="<%= appointment?.appointmentId %>"
+            x-data="{ accordionOpen: false }"
+            @click.outside="accordionOpen = false"
+            class="rounded-md border border-stroke px-4 py-3 shadow-9 dark:border-strokedark dark:shadow-none md:px-6 xl:px-7.5"
+          >
+            <button
+              @click="accordionOpen = !accordionOpen"
+              class="flex w-full items-center justify-between gap-2"
+            >
+              <div>
+                <h4
+                  class="text-left text-md font-bold text-black dark:text-white"
+                >
+                  (Initial) Date: <%= appointment?.appointmentDate %>
+                </h4>
+              </div>
+
+              <div
+                class="flex h-9 w-full max-w-9 items-center justify-center rounded-full border border-primary dark:border-white"
+              >
+                <svg
+                  :class="accordionOpen && 'hidden'"
+                  class="fill-primary dark:fill-white"
+                  width="15"
+                  height="15"
+                  viewBox="0 0 15 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M13.2969 6.51563H8.48438V1.70312C8.48438 1.15625 8.04688 0.773438 7.5 0.773438C6.95313 0.773438 6.57031 1.21094 6.57031 1.75781V6.57031H1.75781C1.21094 6.57031 0.828125 7.00781 0.828125 7.55469C0.828125 8.10156 1.26563 8.48438 1.8125 8.48438H6.625V13.2969C6.625 13.8438 7.0625 14.2266 7.60938 14.2266C8.15625 14.2266 8.53906 13.7891 8.53906 13.2422V8.42969H13.3516C13.8984 8.42969 14.2813 7.99219 14.2813 7.44531C14.2266 6.95312 13.7891 6.51563 13.2969 6.51563Z"
+                    fill=""
+                  />
+                </svg>
+
+                <svg
+                  :class="accordionOpen === true ? 'block' : 'hidden'"
+                  class="fill-primary dark:fill-white"
+                  width="15"
+                  height="3"
+                  viewBox="0 0 15 3"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M13.503 0.447144C13.446 0.447144 13.503 0.447144 13.503 0.447144H1.49482C0.925718 0.447144 0.527344 0.902427 0.527344 1.47153C0.527344 2.04064 0.982629 2.43901 1.55173 2.43901H13.5599C14.129 2.43901 14.5273 1.98373 14.5273 1.41462C14.4704 0.902427 14.0151 0.447144 13.503 0.447144Z"
+                    fill=""
+                  />
+                </svg>
+              </div>
+            </button>
+
+            <div x-show="accordionOpen" class="mt-5 duration-200 ease-in-out">
+              <ul class="text-white p-2">
+                <div class="flex flex-col md:flex-row">
+                  <li class="flex-1 my-2">
+                    <span class="font-semibold">Weight: </span>
+                    <span class="max-w-[830px] font-medium"
+                      ><%= appointment?.weight %></span
+                    >
+                  </li>
+                  <li class="flex-1 my-2">
+                    <span class="font-semibold">Height: </span>
+                    <span class="max-w-[830px] font-medium"
+                      ><%= appointment?.height %></span
+                    >
+                  </li>
+                </div>
+                <li class="my-2">
+                  <span class="font-semibold">Blood Pressure: </span>
+                  <span class="max-w-[830px] font-medium"
+                    ><%= appointment?.bloodPressure %></span
+                  >
+                </li>
+                <li class="my-2">
+                  <span class="font-semibold">Guidelines: </span>
+                  <p class="max-w-[830px] font-medium pl-2">
+                    <%= appointment?.guidelines %>
+                  </p>
+                </li>
+                <li class="my-2">
+                  <span class="font-semibold">Notes: </span>
+                  <p class="max-w-[830px] font-medium pl-2">
+                    <%= appointment?.notes %>
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- Accordion Item End -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Appointment Data End -->
+</div>
+
+<!-- <script>
+    const userData = ` JSON.stringify(userData)`;
+  </script> -->
+<script type="module" src="/js/participants/userScript.js"></script>

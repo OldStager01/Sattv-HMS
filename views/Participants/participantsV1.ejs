@@ -1,0 +1,365 @@
+<!-- component -->
+<style>
+  /* Add this to your CSS */
+  .task-row {
+    transition: opacity 0.3s ease;
+  }
+
+  .task-row.hidden {
+    display: none;
+  }
+  .filter-button,
+  .filter-payment {
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .filter-button.active,
+  .filter-payment.active {
+    background-color: #16a6ffa9; /* Active background color */
+    color: white; /* Active text color */
+  }
+
+  th {
+    position: relative;
+  }
+
+  th::after {
+    content: "";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    display: none;
+  }
+
+  th.sort-asc::after {
+    display: block;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  th.sort-desc::after {
+    display: block;
+    transform: translateY(-50%) rotate(-135deg);
+  }
+</style>
+<div class="sm:px-6 w-full">
+  <div class="bg-white dark:bg-boxdark py-4 md:py-7 px-4 md:px-8 xl:px-10">
+    <div class="sm:flex items-center justify-between gap-5">
+      <!-- Search box start -->
+      <div class="flex items-center">
+        <input
+          type="text"
+          id="searchBox"
+          class="border rounded-full px-4 py-2"
+          placeholder="Search..."
+        />
+      </div>
+      <!-- Search box end -->
+      <!-- User Status Filter start -->
+      <div class="flex items-center">
+        <span class="font-bold mr-4">User Status: </span>
+        <a
+          class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800"
+          href=" javascript:void(0)"
+        >
+          <div
+            class="filter-button py-2 px-8 text-gray-400 hover:bg-indigo-100 hover:text-indigo-700 rounded-full"
+            data-status="all"
+          >
+            <p>All</p>
+          </div>
+        </a>
+        <a
+          class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8"
+          href="javascript:void(0)"
+        >
+          <div
+            class="filter-button active py-2 px-8 text-gray-400 hover:text-indigo-700 hover:bg-indigo-100 rounded-full"
+            data-status="active"
+          >
+            <p>Active</p>
+          </div>
+        </a>
+        <a
+          class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8"
+          href="javascript:void(0)"
+        >
+          <div
+            class="filter-button py-2 px-8 text-gray-400 hover:text-indigo-700 hover:bg-indigo-100 rounded-full"
+            data-status="inactive"
+          >
+            <p>Inactive</p>
+          </div>
+        </a>
+      </div>
+      <!-- User Status Filter end -->
+
+      <!-- Payment Status Filter start -->
+      <div class="flex items-center">
+        <span class="font-bold mr-4">Payment Status: </span>
+        <a
+          class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800"
+          href=" javascript:void(0)"
+        >
+          <div
+            class="filter-payment active py-2 px-8 text-gray-400 hover:bg-indigo-100 hover:text-indigo-700 rounded-full"
+            data-status="all"
+          >
+            <p>All</p>
+          </div>
+        </a>
+        <a
+          class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8"
+          href="javascript:void(0)"
+        >
+          <div
+            class="filter-payment py-2 px-8 text-gray-400 hover:text-indigo-700 hover:bg-indigo-100 rounded-full"
+            data-status="complete"
+          >
+            <p>Complete</p>
+          </div>
+        </a>
+        <a
+          class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8"
+          href="javascript:void(0)"
+        >
+          <div
+            class="filter-payment py-2 px-8 text-gray-400 hover:text-indigo-700 hover:bg-indigo-100 rounded-full"
+            data-status="pending"
+          >
+            <p>Pending</p>
+          </div>
+        </a>
+      </div>
+      <!-- Payment Status Filter end -->
+    </div>
+    <div class="mt-7 overflow-x-auto">
+      <table class="w-full whitespace-nowrap">
+        <thead>
+          <tr class="mb-5">
+            <th
+              class="cursor-pointer text-left pl-5"
+              onclick="sortTable(0)"
+            ></th>
+            <th
+              class="cursor-pointer text-md text-left pl-5"
+              onclick="sortTable(1)"
+            >
+              ID
+            </th>
+            <th
+              class="cursor-pointer text-md text-left pl-5"
+              onclick="sortTable(2)"
+            >
+              Name
+            </th>
+            <th
+              class="cursor-pointer text-md text-left pl-5"
+              onclick="sortTable(3)"
+            >
+              Status
+            </th>
+            <th
+              class="cursor-pointer text-md text-left pl-5"
+              onclick="sortTable(4)"
+            >
+              Payment
+            </th>
+            <th
+              class="cursor-pointer text-md text-left pl-5"
+              onclick="sortTable(5)"
+            >
+              Next Appointment Date
+            </th>
+            <th
+              class="cursor-pointer text-md text-left pl-5"
+              onclick="sortTable(6)"
+            >
+              Previous Appointment Date
+            </th>
+            <th class="cursor-pointer text-left pl-5">View</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% users.forEach((user) => { %>
+          <tr
+            id="<%= user.id %>"
+            tabindex="0"
+            class="task-row focus:outline-none h-16 border border-gray-100 rounded"
+            data-status="<%= user.status %>"
+            data-payment="<%= user.paymentStatus %>"
+          >
+            <td>
+              <div class="ml-5">
+                <div
+                  class="bg-gray-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative"
+                >
+                  <input
+                    placeholder="checkbox"
+                    type="checkbox"
+                    class="focus:opacity-100 checkbox opacity-0 absolute cursor-pointer w-full h-full"
+                  />
+                  <div
+                    class="check-icon hidden bg-indigo-700 text-white rounded-sm"
+                  >
+                    <svg
+                      class="icon icon-tabler icon-tabler-check"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path stroke="none" d="M0 0h24v24H0z"></path>
+                      <path d="M5 12l5 5l10 -10"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="flex items-center pl-5">
+                <p class="text-md font-medium leading-none mr-2">
+                  <%= user.id %>
+                </p>
+              </div>
+            </td>
+
+            <td class="pl-5">
+              <div class="flex items-center">
+                <p class="text-md leading-none text-left ml-2">
+                  <%= `${user.firstName} ${user.lastName}` %>
+                </p>
+              </div>
+            </td>
+            <td class="pl-5">
+              <div class="flex items-center">
+                <p class="text-md leading-none ml-2"><%= user.status %></p>
+              </div>
+            </td>
+            <td class="pl-5">
+              <div class="flex items-center">
+                <p class="text-md leading-none ml-2">
+                  <%= user.paymentStatus %>
+                </p>
+              </div>
+            </td>
+            <td class="pl-5">
+              <button
+                class="py-3 px-3 text-md focus:outline-none leading-non rounded nextAppointmentDate"
+              >
+                <%= user.nextAppointmentDate %>
+              </button>
+            </td>
+            <td class="pl-5">
+              <button
+                class="py-3 px-3 text-md focus:outline-none leading-non rounded lastAppointmentDate"
+              >
+                <%= user.lastAppointmentDate %>
+              </button>
+            </td>
+            <td class="pl-4">
+              <a href="/users/<%= user.id %>">
+                <button
+                  class="focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-md leading-none text-gray-600 py-2 px-4 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none"
+                >
+                  View
+                </button>
+              </a>
+            </td>
+          </tr>
+          <% }); %>
+          <!-- More rows as needed -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+  const userData = `<%= JSON.stringify(users).replace(/&quot;/g, '"') %>`;
+</script>
+<script>
+  function formatINtoUS(dateString) {
+    if (!dateString) {
+      return null;
+    }
+    dateString = dateString.toString().toLowerCase();
+    // Split the date and time parts
+    const [datePart, timePart] = dateString.split(", ");
+    if (!datePart || !timePart) {
+      return null;
+    }
+
+    // Split the date part into day, month, and year
+    const [day, month, year] = datePart.split("/");
+
+    // Convert 2-digit year to 4-digit year
+    const fullYear = `20${year}`;
+
+    // Rearrange to YYYY-MM-DDTHH:mm:ss format for the date
+    const formattedDate = `${fullYear}-${month}-${day}`;
+
+    // Parse time with AM/PM
+    const [time, modifier] = timePart.split(" ");
+    let [hours, minutes] = time.split(":");
+
+    if (modifier === "pm" && hours !== "12") {
+      hours = parseInt(hours, 10) + 12;
+    } else if (modifier === "am" && hours === "12") {
+      hours = "00";
+    }
+
+    // Combine date and time into a single string
+    const formattedDateTime = `${formattedDate}T${hours}:${minutes}:00`;
+
+    // Parse the formatted date-time string into a Date object
+    return new Date(formattedDateTime);
+  }
+  function sortTable(columnIndex) {
+    const table = document.querySelector("table");
+    const tbody = table.querySelector("tbody");
+    const rows = Array.from(tbody.querySelectorAll("tr"));
+    const isAscending = table
+      .querySelectorAll("th")
+      [columnIndex].classList.contains("sort-asc");
+
+    rows.sort((a, b) => {
+      const aText = a.children[columnIndex].textContent.trim();
+      const bText = b.children[columnIndex].textContent.trim();
+      const aDate = formatINtoUS(aText);
+      const bDate = formatINtoUS(bText);
+
+      if (columnIndex === 5 || columnIndex === 6) {
+        // For date column
+        return isAscending ? aDate - bDate : bDate - aDate;
+      }
+
+      return isAscending
+        ? aText.localeCompare(bText)
+        : bText.localeCompare(aText);
+    });
+
+    tbody.innerHTML = "";
+    rows.forEach((row) => tbody.appendChild(row));
+
+    // Update sort indicators
+    const headers = table.querySelectorAll("th");
+    headers.forEach((header, index) => {
+      header.classList.remove("sort-asc", "sort-desc");
+      if (index === columnIndex) {
+        header.classList.add(isAscending ? "sort-desc" : "sort-asc");
+      }
+    });
+  }
+</script>
+<script defer type="module" src="/js/participants/participants.js"></script>

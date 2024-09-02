@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Form</title>
+</head>
+<body> 
+    <h1>User Form</h1> 
+    <form action="/user/register" method="post" enctype="multipart/form-data">
+        <label for="firstName">First Name:</label><br>
+        <input type="text" id="firstName" name="firstName" required><br>
+        <label for="lastName">Last Name:</label><br>
+        <input type="text" id="lastName" name="lastName" required><br><br>
+
+        <label for="contact">Contact:</label><br>
+        <input type="tel" id="contact" name="contact" required><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="age">Age:</label><br>
+        <input type="number" id="age" name="age" min="0" required><br><br>
+
+        <label for="gender">Gender:</label><br>
+        <select id="gender" name="gender" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+            <option value="prefer_not_to_say">Prefer not to say</option>
+        </select><br><br>
+        <label for="uploadFiles">Upload Files: </label>
+        <input type="file" name="files" multiple accept=".jpg, .jpeg, .png, .txt, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx">
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

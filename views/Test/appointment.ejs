@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Form</title>
+</head>
+<body> 
+    <h1>User Form</h1> 
+    <form action="/user/<%= id %>/appointment" method="post" enctype="multipart/form-data">
+        <label for="height">Height:</label><br>
+        <input type="text" id="height" name="height" required><br>
+        <label for="weight">Weight:</label><br>
+        <input type="text" id="weight" name="weight" required><br><br>
+
+        <label for="waistCircumference">Waist Circumference:</label><br>
+        <input type="text" id="waistCircumference" name="waistCircumference" required><br><br>
+        
+        <label for="guidelines">Guidelines:</label><br>
+        <textarea id="guidelines" name="guidelines" rows="10" required></textarea><br><br>
+        
+        <label for="nextAppointmentDate">Next Appointment Date:</label><br>
+        <input type="datetime-local" id="nextAppointmentDate" name="nextAppointmentDate"><br><br>
+
+        <label for="uploadFiles">Upload Files: </label>
+        <input type="file" name="files" multiple accept=".jpg, .jpeg, .png, .txt, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx">
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
